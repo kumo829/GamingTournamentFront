@@ -1,0 +1,22 @@
+{
+    "login": {
+        "title": "Enter",
+        "form": {
+            "fields": {
+                "email": "Email",
+                "password": "Password"
+            },
+            "buttons": {
+                "enter": "Login"
+            },
+            "errors":{
+                "email":{
+                    "required": "The email is a required field",
+                    "format": "The email format is not correct"
+                },
+                "password": "The password is a required field",
+                "access": "Email or password is incorrect. Please verify."
+            }
+        }
+    }
+}

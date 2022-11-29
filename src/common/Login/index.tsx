@@ -17,6 +17,7 @@ import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import {Send} from "@mui/icons-material";
+import { Trans, useTranslation } from "react-i18next";
 
 type FormData = {
     email: string;
@@ -30,14 +31,16 @@ const Login: React.FC = ({}) => {
         loading: false,
     });
 
+    const {t} = useTranslation();
+
     sessionStorage.removeItem("token");
 
     const formValidationSchema = Yup.object().shape({
         email: Yup.string()
-            .required('El email es obligatorio')
-            .email('El formato de email no es correcto'),
+            .required(`${t('login.form.errors.email.required')}`)
+            .email(`${t('login.form.errors.email.format')}`),
         password: Yup.string()
-            .required('La contraseña es obligatoria')
+            .required(`${t('login.form.errors.password')}`)
     });
 
     const {
@@ -86,7 +89,9 @@ const Login: React.FC = ({}) => {
                         >
                             <Avatar sx={{width: 70, height: 70}} src="/img/robocode.jpg"/>
                             <Typography component="h1" variant="h4" marginBottom={5}>
-                                Entrar
+                                <Trans i18nKey="login.title">
+                                    Login
+                                </Trans>
                             </Typography>
 
                         </Grid>
@@ -98,8 +103,8 @@ const Login: React.FC = ({}) => {
                                         required
                                         autoFocus
                                         autoComplete="email"
-                                        label="Correo electrónico"
-                                        placeholder="Correo electrónico"
+                                        label={t('login.form.fields.email')}
+                                        placeholder={`${t('login.form.fields.email')}`}
                                         variant="outlined"
                                         fullWidth
                                         {...register('email')}
@@ -114,8 +119,8 @@ const Login: React.FC = ({}) => {
                                     <TextField
                                         type={values.showPass ? "text" : "password"}
                                         fullWidth
-                                        label="Contraseña"
-                                        placeholder="Contraseña"
+                                        label={t('login.form.fields.password')}
+                                        placeholder={`${t('login.form.fields.password')}`}
                                         variant="outlined"
                                         required
                                         {...register('password')}
@@ -149,13 +154,14 @@ const Login: React.FC = ({}) => {
                                         variant="contained"
                                         onClick={handleSubmit(onSubmit)}
                                     >
-                                        Entrar
+                                        <Trans i18nKey="login.form.buttons.enter">
+                                            Enter
+                                        </Trans>
                                     </LoadingButton>
                                 </Grid>
 
                                 {values.error && <Grid item>
-                                    <Alert severity="error">Nombre de usuario o contraseña incorrectos. Favor de
-                                        verificar.</Alert>
+                                    <Alert severity="error">{t('login.form.errors.access')}</Alert>
                                 </Grid>}
                             </Grid>
                         </form>
