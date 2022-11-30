@@ -1,9 +1,13 @@
+import { BrowserRouter, HashRouter } from 'react-router-dom'
 import './App.css'
-import Login from './common/Login'
+import Login from './pages/login'
+import AppRouter from './Router'
 
 function App() {
   return (
-    <Login />
+    <HashRouter>
+      <AppRouter />
+    </HashRouter>
   )
 }
 

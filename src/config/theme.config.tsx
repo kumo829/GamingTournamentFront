@@ -1,5 +1,7 @@
 import { CssBaseline } from '@mui/material';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import React from 'react';
+import { NavLink, NavLinkProps} from 'react-router-dom';
 
 interface ThemeProps {
     children: JSX.Element
@@ -11,6 +13,18 @@ enum themePallete {
     FONT_PRIMARY = "Nunito, monospace",
     FONT_SECONDARY = "JetBrains Mono, monospace",
 }
+
+
+
+
+export const NavButton = React.forwardRef<HTMLAnchorElement, Omit<NavLinkProps, 'to'> & { href: NavLinkProps['to'] }>((props, ref) => {
+  const { href, ...other } = props;
+  // Map href (MUI) -> to (react-router)
+  return <NavLink ref={ref} to={href} role={undefined}  {...other}  style={({isActive}) => isActive ? {textTransform: 'none', background: `${themePallete.PRIMARY}`, color: '#FFF'} :  {textTransform: 'none'}}  />;
+});
+
+
+
 
 const theme = createTheme({
     palette: {

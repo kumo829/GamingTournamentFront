@@ -18,6 +18,7 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import {Send} from "@mui/icons-material";
 import { Trans, useTranslation } from "react-i18next";
+import { NavBar } from "../../common/NavBar";
 
 type FormData = {
     email: string;
@@ -71,7 +72,7 @@ const Login: React.FC = ({}) => {
     };
 
     return (
-        <div>
+        <>
             <Container maxWidth="sm">
                 <Grid
                     container
@@ -168,7 +169,7 @@ const Login: React.FC = ({}) => {
                     </Paper>
                 </Grid>
             </Container>
-        </div>
+        </>
     );
 };
 
