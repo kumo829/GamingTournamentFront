@@ -9,8 +9,8 @@
             "buttons": {
                 "enter": "Login"
             },
-            "errors":{
-                "email":{
+            "errors": {
+                "email": {
                     "required": "The email is a required field",
                     "format": "The email format is not correct"
                 },

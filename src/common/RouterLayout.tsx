@@ -1,13 +1,14 @@
-import { Outlet } from "react-router-dom";
-import { NavBar } from "./NavBar";
+import React from 'react'
+import { Outlet } from 'react-router-dom'
+import { NavBar } from './NavBar'
 
 const RouterLayout: React.FC<{}> = () => {
-    return(
+  return (
         <>
             <NavBar />
             <Outlet />
         </>
-    );
-};
+  )
+}
 
-export default RouterLayout;
+export default RouterLayout

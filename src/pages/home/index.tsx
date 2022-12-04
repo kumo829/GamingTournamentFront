@@ -1,9 +1,10 @@
+import React from 'react'
 const HomePage: React.FC<{}> = () => {
-    return (
+  return (
         <>
         Home
         </>
-    );
-};
+  )
+}
 
-export default HomePage;
+export default HomePage

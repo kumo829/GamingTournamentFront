@@ -1,9 +1,9 @@
-import { BrowserRouter, HashRouter } from 'react-router-dom'
+import React, { ReactElement } from 'react'
+import { HashRouter } from 'react-router-dom'
 import './App.css'
-import Login from './pages/login'
 import AppRouter from './Router'
 
-function App() {
+function App (): ReactElement {
   return (
     <HashRouter>
       <AppRouter />
