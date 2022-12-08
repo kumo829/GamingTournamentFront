@@ -18,5 +18,9 @@
                 "access": "Email or password is incorrect. Please verify."
             }
         }
+    }, 
+    "register": {
+        "title": "Create an account",
+        "link": "Not an user? Create an account"
     }
 }

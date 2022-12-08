@@ -72,107 +72,110 @@ const Login: React.FC<{}> = () => {
   }
 
   return (
-        <>
-            <Container maxWidth="sm">
-                <Grid
-                    container
-                    spacing={2}
-                    direction="column"
-                    justifyContent="center"
-                    style={{ minHeight: '100vh' }}
-                >
-                    <Paper elevation={2} sx={{ padding: 5 }}>
-                        <Grid
-                            container
-                            direction="column"
-                            justifyContent="center"
-                            alignItems="center"
-                        >
-                            <Avatar sx={{ width: 70, height: 70 }} src="/img/robocode.jpg" />
-                            <Typography component="h1" variant="h4" marginBottom={5}>
-                                <Trans i18nKey="login.title">
-                                    Login
-                                </Trans>
-                            </Typography>
+        <Container maxWidth="sm">
+            <Grid
+                container
+                spacing={2}
+                direction="column"
+                alignItems="center"
+                justifyContent="center"
+                style={{ minHeight: '100vh' }}
+            >
+                <Paper elevation={2} sx={{ padding: 5 }}>
+                    <Grid
+                        container
+                        direction="column"
+                        justifyContent="center"
+                        alignItems="center"
+                    >
+                        <Avatar sx={{ width: 70, height: 70 }} src="/img/robocode.jpg" />
+                        <Typography component="h1" variant="h4" marginBottom={5}>
+                            <Trans i18nKey="login.title">
+                                Login
+                            </Trans>
+                        </Typography>
 
-                        </Grid>
-                        <Box component="form">
-                            <Grid container direction="column" spacing={3}>
-                                <Grid item>
-                                    <TextField
-                                        type="email"
-                                        required
-                                        autoFocus
-                                        autoComplete="email"
-                                        label={t('login.form.fields.email')}
-                                        placeholder={`${t('login.form.fields.email')}`}
-                                        variant="outlined"
-                                        fullWidth
-                                        {...register('email')}
-                                        error={!(errors.email == null)}
-                                    />
-                                    <Typography variant="subtitle1" color="error.main">
-                                        {errors.email?.message}
-                                    </Typography>
-                                </Grid>
-
-                                <Grid item>
-                                    <TextField
-                                        type={values.showPass ? 'text' : 'password'}
-                                        fullWidth
-                                        label={t('login.form.fields.password')}
-                                        placeholder={`${t('login.form.fields.password')}`}
-                                        variant="outlined"
-                                        required
-                                        {...register('password')}
-                                        error={!(errors.password == null)}
-                                        InputProps={{
-                                          endAdornment: (
-                                                <InputAdornment position="end">
-                                                    <IconButton
-                                                        onClick={handlePassVisibilty}
-                                                        aria-label="toggle password"
-                                                        edge="end"
-                                                    >
-                                                        {values.showPass ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                                                    </IconButton>
-                                                </InputAdornment>
-                                          )
-                                        }}
-                                    />
-                                    <Typography variant="subtitle1" color="error.main">
-                                        {errors.password?.message}
-                                    </Typography>
-                                </Grid>
-
-                                <Grid item>
-                                    <LoadingButton
-                                        type="submit"
-                                        fullWidth
-                                        endIcon={<Send />}
-                                        loading={values.loading}
-                                        loadingPosition="end"
-                                        variant="contained"
-                                        onClick={handleSubmit(onSubmit)}
-                                    >
-                                        <Trans i18nKey="login.form.buttons.enter">
-                                            Enter
-                                        </Trans>
-                                    </LoadingButton>
-                                </Grid>
-
-                                {values.error && <Grid item>
-                                    <Alert severity="error">{t('login.form.errors.access')}</Alert>
-                                </Grid>}
-                            </Grid>
-                        </Box>
-                    </Paper>
-                    <Grid item>
-                        <CreateAccountForm />
                     </Grid>
+                    <Box component="form">
+                        <Grid container direction="column" spacing={3}>
+                            <Grid item>
+                                <TextField
+                                    data-testid="user-input"
+                                    type="email"
+                                    required
+                                    autoFocus
+                                    autoComplete="email"
+                                    label={t('login.form.fields.email')}
+                                    placeholder={`${t('login.form.fields.email')}`}
+                                    variant="outlined"
+                                    fullWidth
+                                    {...register('email')}
+                                    error={!(errors.email == null)}
+                                    inputProps={{ 'data-testid': 'login-username' }}
+                                />
+                                <Typography variant="subtitle1" color="error.main">
+                                    {errors.email?.message}
+                                </Typography>
+                            </Grid>
+
+                            <Grid item>
+                                <TextField
+                                    type={values.showPass ? 'text' : 'password'}
+                                    fullWidth
+                                    label={t('login.form.fields.password')}
+                                    placeholder={`${t('login.form.fields.password')}`}
+                                    variant="outlined"
+                                    required
+                                    {...register('password')}
+                                    error={!(errors.password == null)}
+                                    inputProps={{ 'data-testid': 'login-password' }}
+                                    InputProps={{
+                                      endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    onClick={handlePassVisibilty}
+                                                    aria-label="toggle password"
+                                                    edge="end"
+                                                >
+                                                    {values.showPass ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                      )
+                                    }}
+                                />
+                                <Typography variant="subtitle1" color="error.main">
+                                    {errors.password?.message}
+                                </Typography>
+                            </Grid>
+
+                            <Grid item>
+                                <LoadingButton
+                                    type="submit"
+                                    fullWidth
+                                    endIcon={<Send />}
+                                    loading={values.loading}
+                                    loadingPosition="end"
+                                    variant="contained"
+                                    data-testid="login-submit"
+                                    onClick={handleSubmit(onSubmit)}
+                                >
+                                    <Trans i18nKey="login.form.buttons.enter">
+                                        Enter
+                                    </Trans>
+                                </LoadingButton>
+                            </Grid>
+
+                            {values.error && <Grid item>
+                                <Alert severity="error">{t('login.form.errors.access')}</Alert>
+                            </Grid>}
+                        </Grid>
+                    </Box>
+                </Paper>
+                <Grid item>
+                    <CreateAccountForm />
                 </Grid>
-            </Container>
-        </>
+            </Grid>
+        </Container>
   )
 }
 
