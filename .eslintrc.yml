@@ -1,12 +1,12 @@
 settings:
   react:
-    version: 'detect'
+    version: "detect"
 env:
   browser: true
   es2021: true
 extends:
   - plugin:react/recommended
-  - eslint:recommended  
+  - eslint:recommended
   - standard-with-typescript
 overrides: []
 parserOptions:
@@ -17,5 +17,6 @@ plugins:
   - react
 rules:
   {
-    "@typescript-eslint/no-misused-promises":["error", { "checksVoidReturn": false }],
+    "@typescript-eslint/no-misused-promises":
+      ["error", { "checksVoidReturn": false }],
   }

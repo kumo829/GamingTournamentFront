@@ -20,7 +20,27 @@
         }
     }, 
     "register": {
-        "title": "Create an account",
-        "link": "Not an user? Create an account"
+        "title": "Create account",
+        "link": "Not an user? Create an account",
+        "form": {
+            "fields": {
+                "firstname": "First Name",
+                "lastname": "Last Name",
+                "email": "Email"
+            },
+            "buttons": {
+                "enter": "Register",
+                "cancel": "Cancel"
+            },
+            "errors": {
+                "email": {
+                    "required": "The email is a required field",
+                    "format": "The email format is not correct"
+                },
+                "firstname": "The first name is a required field",
+                "lastname": "The last name is a required field",
+                "exists": "There is already an account associated to this email."
+            }
+        }
     }
 }

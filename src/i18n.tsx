@@ -16,8 +16,6 @@ void i18n
     debug: true,
     lng: 'en',
     fallbackLng: 'en',
-    ns: ['translationsNS'],
-    defaultNS: 'translationsNS',
 
     interpolation: {
       escapeValue: false // not needed for react as it escapes by default
