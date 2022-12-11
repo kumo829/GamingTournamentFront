@@ -2,8 +2,17 @@ import React from 'react'
 import { render, screen, fireEvent, act } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import Login from '../pages/login'
+import axios from 'axios'
+import * as router from 'react-router'
+
+jest.mock('axios')
+const mockedAxios = axios as jest.Mocked<typeof axios>
+const navigate = jest.fn()
 
 describe('Login component', () => {
+  beforeEach(() => {
+    jest.spyOn(router, 'useNavigate').mockImplementation(() => navigate)
+  })
   test('should render translated form', () => {
     render(<Login />)
     expect(screen.getByText(/Enter/i)).toBeInTheDocument()
@@ -89,5 +98,70 @@ describe('Login component', () => {
     expect(submit).toBeDisabled()
     expect(submit).toHaveClass('Mui-disabled')
     expect(submit).toHaveClass('MuiLoadingButton-loading')
+  })
+  test('should navigate to profile page when username and password are valid', async () => {
+    const testuser = 'user@mail.com'
+    const testpass = 'abc123'
+
+    mockedAxios.post.mockResolvedValue({
+      data: {
+        email: testuser
+      },
+      status: 200,
+      statusText: 'Ok',
+      headers: {
+        authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+      },
+      config: {}
+    })
+
+    render(<Login />)
+
+    const userInput = screen.getByTestId('login-email')
+    const passInput = screen.getByTestId('login-password')
+    const submit = screen.getByTestId('login-submit')
+
+    fireEvent.change(userInput, { target: { value: testuser } })
+    expect(userInput).toHaveValue(testuser)
+
+    fireEvent.change(passInput, { target: { value: testpass } })
+    expect(passInput).toHaveValue(testpass)
+
+    await act(() => {
+      fireEvent.click(submit)
+    })
+
+    expect(navigate).toHaveBeenCalledTimes(1)
+    expect(navigate).toHaveBeenCalledWith('/profile')
+  })
+  test('should display an error when username and password are not valid', async () => {
+    const testuser = 'user@mail.com'
+    const testpass = 'abc123'
+
+    const networkError = new Error('User not found')
+    mockedAxios.post.mockRejectedValueOnce(networkError)
+
+    render(<Login />)
+
+    const userInput = screen.getByTestId('login-email')
+    const passInput = screen.getByTestId('login-password')
+    const submit = screen.getByTestId('login-submit')
+
+    fireEvent.change(userInput, { target: { value: testuser } })
+    expect(userInput).toHaveValue(testuser)
+
+    fireEvent.change(passInput, { target: { value: testpass } })
+    expect(passInput).toHaveValue(testpass)
+
+    await act(() => {
+      fireEvent.click(submit)
+    })
+
+    expect(userInput).not.toBeDisabled()
+    expect(passInput).not.toBeDisabled()
+    expect(submit).not.toBeDisabled()
+    expect(submit).not.toHaveClass('MuiLoadingButton-loading')
+    expect(screen.getByText('Email or password is incorrect. Please verify.')).toBeInTheDocument()
+    expect(navigate).toHaveBeenCalledTimes(0)
   })
 })

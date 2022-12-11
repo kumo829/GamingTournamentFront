@@ -21,6 +21,8 @@ import CreateAccountForm from '../../components/CreateAccountForm'
 import TranslatedTypography from '../../components/TranslatedTypography'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
+import authService from './auth.service'
+import { useNavigate } from 'react-router-dom'
 
 interface FormData {
   email: string
@@ -55,12 +57,36 @@ const Login: React.FC<{}> = (): JSX.Element => {
     resolver: yupResolver(formValidationSchema)
   })
 
-  const onSubmit = (data: any): void => {
+  const navigate = useNavigate()
+
+  const onSubmit = (data: FormData): void => {
     setValues({
       ...values,
       error: false,
       loading: true
     })
+
+    authService
+      .login(data.email, data.password)
+      .then(
+        (response) => {
+          setValues({
+            ...values,
+            error: false,
+            loading: false
+          })
+
+          navigate('/profile')
+        })
+      .catch((err) => {
+        setValues({
+          ...values,
+          error: true,
+          loading: false
+        })
+        console.error(err)
+      }
+      )
   }
 
   return (
