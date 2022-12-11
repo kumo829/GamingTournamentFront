@@ -10,7 +10,5 @@ export const useTranslation = () => {
 }
 
 export const Trans = ({ i18nKey, children }: any): string => {
-  console.log(i18nKey)
-
   return i18nextMocks.mockT(i18nKey)
 }

@@ -3,8 +3,18 @@ import React, { useState } from 'react'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import { UseFormRegister } from 'react-hook-form'
+import { FieldValues } from 'react-hook-form/dist/types/fields'
 
-const PasswordField: React.FC<TextFieldProps & UseFormRegister> = ({ register, ...props }, ref): JSX.Element => {
+export interface PasswordFormValues extends FieldValues {
+  password: string
+  email: string
+}
+
+interface PasswordFieldProps {
+  register: UseFormRegister<PasswordFormValues>
+}
+
+const PasswordField: React.FC<TextFieldProps & PasswordFieldProps> = ({ register, ...props }): JSX.Element => {
   const [showPass, setShowPass] = useState(false)
 
   return <TextField

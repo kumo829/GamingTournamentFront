@@ -101,7 +101,7 @@ const CreateAccountForm: React.FC<{}> = () => {
                     fullWidth
                     {...register('firstname')}
                     error={!(errors.firstname == null)}
-                    inputProps={{ 'data-testid': 'login-username' }}
+                    inputProps={{ 'data-testid': 'register-firstname' }}
                   />
                   <Typography variant="subtitle1" color="error.main">
                     {errors.firstname?.message}
@@ -119,7 +119,7 @@ const CreateAccountForm: React.FC<{}> = () => {
                     fullWidth
                     {...register('lastname')}
                     error={!(errors.lastname == null)}
-                    inputProps={{ 'data-testid': 'login-username' }}
+                    inputProps={{ 'data-testid': 'register-lastname' }}
                   />
                   <Typography variant="subtitle1" color="error.main">
                     {errors.lastname?.message}
@@ -138,7 +138,8 @@ const CreateAccountForm: React.FC<{}> = () => {
                     fullWidth
                     {...register('email')}
                     error={!(errors.email == null)}
-                    inputProps={{ 'data-testid': 'login-username' }}
+                    helperText="We'll never share your email with anyone else."
+                    inputProps={{ 'data-testid': 'register-email' }}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
@@ -178,7 +179,7 @@ const CreateAccountForm: React.FC<{}> = () => {
                       loading={loading}
                       loadingPosition="end"
                       variant="contained"
-                      data-testid="login-submit"
+                      data-testid="register-submit"
                       onClick={handleSubmit(onSubmit)}>
                       <Trans i18nKey="register.form.buttons.enter" />
                     </LoadingButton>

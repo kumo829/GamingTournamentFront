@@ -6,7 +6,9 @@ import {
   Paper,
   TextField,
   Typography,
-  Box
+  Box,
+  InputAdornment,
+  IconButton
 } from '@mui/material'
 import React, { useState } from 'react'
 import { LoadingButton } from '@mui/lab'
@@ -16,8 +18,9 @@ import * as Yup from 'yup'
 import { Send } from '@mui/icons-material'
 import { Trans, useTranslation } from 'react-i18next'
 import CreateAccountForm from '../../components/CreateAccountForm'
-import PasswordField from '../../components/PasswordField'
 import TranslatedTypography from '../../components/TranslatedTypography'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 
 interface FormData {
   email: string
@@ -29,6 +32,8 @@ const Login: React.FC<{}> = (): JSX.Element => {
     error: false,
     loading: false
   })
+
+  const [showPass, setShowPass] = useState(false)
 
   const { t } = useTranslation()
 
@@ -51,9 +56,6 @@ const Login: React.FC<{}> = (): JSX.Element => {
   })
 
   const onSubmit = (data: any): void => {
-    console.log(errors)
-    console.log(data)
-
     setValues({
       ...values,
       error: false,
@@ -86,7 +88,6 @@ const Login: React.FC<{}> = (): JSX.Element => {
             <Grid container direction="column" spacing={3}>
               <Grid item>
                 <TextField
-                  data-testid="user-input"
                   type="email"
                   required
                   autoFocus
@@ -98,7 +99,7 @@ const Login: React.FC<{}> = (): JSX.Element => {
                   fullWidth
                   {...register('email')}
                   error={!(errors.email == null)}
-                  inputProps={{ 'data-testid': 'login-username' }}
+                  inputProps={{ 'data-testid': 'login-email' }}
                 />
                 <Typography variant="subtitle1" color="error.main">
                   {errors.email?.message}
@@ -106,16 +107,30 @@ const Login: React.FC<{}> = (): JSX.Element => {
               </Grid>
 
               <Grid item>
-                <PasswordField
+              <TextField
+                  type={showPass ? 'text' : 'password'}
                   fullWidth
                   disabled={values.loading}
                   label={t('login.form.fields.password')}
                   placeholder={`${t('login.form.fields.password')}`}
                   variant="outlined"
                   required
-                  register={register}
+                  {...register('password')}
                   error={!(errors.password == null)}
                   inputProps={{ 'data-testid': 'login-password' }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={() => { setShowPass(!showPass) }}
+                          aria-label="toggle password"
+                          edge="end"
+                        >
+                          {showPass ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                        </IconButton>
+                      </InputAdornment>
+                    )
+                  }}
                 />
                 <Typography variant="subtitle1" color="error.main">
                   {errors.password?.message}
@@ -124,6 +139,7 @@ const Login: React.FC<{}> = (): JSX.Element => {
 
               <Grid item>
                 <LoadingButton
+                  disabled={values.loading}
                   type="submit"
                   fullWidth
                   endIcon={<Send />}
