@@ -1,4 +1,4 @@
-# Front-end for the Gaming Tournaments Manager proyect 
+# Front-end for the Gaming Tournaments Manager Project 
 
 
 ## How to Run
