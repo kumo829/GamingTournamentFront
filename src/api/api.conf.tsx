@@ -1,4 +1,5 @@
 import axios from 'axios'
+import useSessionStorage from '../hooks/useSessionStorage'
 
 axios.defaults.baseURL = 'http://localhost:8080/api'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
@@ -8,8 +9,10 @@ axios.interceptors.request.use(
   request => {
     const headerExists: boolean = Boolean(request.headers?.Authorization)
 
-    if ((request.headers != null) && !headerExists && Boolean(sessionStorage.getItem('token'))) {
-      request.headers.Authorization = sessionStorage.getItem('token')
+    const [token] = useSessionStorage('TOKEN_V1', null)
+
+    if ((request.headers != null) && !headerExists && Boolean(token)) {
+      request.headers.Authorization = token
     }
 
     return request

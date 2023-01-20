@@ -39,8 +39,6 @@ const Login: React.FC<{}> = (): JSX.Element => {
 
   const { t } = useTranslation()
 
-  sessionStorage.removeItem('token')
-
   const formValidationSchema = Yup.object().shape({
     email: Yup.string()
       .required(`${t('login.form.errors.email.required')}`)
